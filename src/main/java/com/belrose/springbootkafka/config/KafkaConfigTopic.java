@@ -14,4 +14,10 @@ public class KafkaConfigTopic {
                // .partitions(10)
                 .build();
     }
+    @Bean
+    public NewTopic springbootkafkaJsonTopic(){
+        return TopicBuilder.name("springbootkafka_json")
+                // .partitions(10)
+                .build();
+    }
 }
