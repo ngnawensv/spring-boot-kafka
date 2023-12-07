@@ -13,8 +13,16 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       #value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+    #This config means kafka consumer can deserialize all the classes from this package
       properties:
         spring:
           json:
             trusted:
               packages: '*'
+
+    #Configured topics name
+    topic:
+        name: springbootkafka
+    topic-json:
+      name: springbootkafka_json

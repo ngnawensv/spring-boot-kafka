@@ -1,5 +1,6 @@
 package com.belrose.springbootkafka.kafka;
 
+import com.belrose.springbootkafka.config.KafkaConfigTopic;
 import com.belrose.springbootkafka.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -13,16 +14,18 @@ import org.springframework.stereotype.Service;
 public class JsonKafkaProducer {
 
     private final KafkaTemplate<String, User> kafkaTemplate;
+    private final KafkaConfigTopic kafkaConfigTopic;
 
-    public JsonKafkaProducer(KafkaTemplate<String, User> kafkaTemplate) {
+    public JsonKafkaProducer(KafkaTemplate<String, User> kafkaTemplate, KafkaConfigTopic kafkaConfigTopic) {
         this.kafkaTemplate = kafkaTemplate;
+        this.kafkaConfigTopic = kafkaConfigTopic;
     }
 
     public void sendMessage(User data){
         log.info(String.format("JsonKafkaProducer->sendMessage: user =>%s",data));
         Message<User> message = MessageBuilder
                 .withPayload(data)
-                .setHeader(KafkaHeaders.TOPIC,"springbootkafka_json")
+                .setHeader(KafkaHeaders.TOPIC,kafkaConfigTopic.getTopicJsonName())
                 .build();
         log.info(String.format("JsonKafkaProducer->sendMessage: Message sent =>%s",message));
         kafkaTemplate.send(message);
